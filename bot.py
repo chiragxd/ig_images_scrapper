@@ -44,25 +44,25 @@ def at_answer(message):
         bot.reply_to(message,'⚠️⚠️⚠️Profile is Private⚠️⚠️⚠️')
         driver.close()
     images_href=[]
-    for img in imgs_src:
+    for img in imgs_src[0:10]:
 
         href = img.find_element_by_tag_name('a').get_attribute("href")
         images_href.append(href)
-    
-    for href in images_href:
+    for i,href in enumerate(images_href):
         driver.get(href)
         img_id=driver.find_element_by_xpath('//div/img').get_attribute('src')
         print("img_id",img_id)
         #extlist =[]
         #extlist.append(str(random.randint(0,1000)))
-        #img_name = img_id.text.join(str(extlist))
+        img_name = message.text+"("+str(i+1)+")"
         #print(img_name)
         if img_id.endswith('.jpg'):
-            bot.send_photo(message.chat.id,photo = img_id)#, caption=img_name
+            bot.send_photo(message.chat.id,photo = img_id,caption=img_name)#, caption=img_name
         else:
-            bot.send_photo(message.chat.id,photo = img_id)
-    #url,caption= get_ig_img(message.text)
+            bot.send_photo(message.chat.id,photo = img_id,caption=img_name)
+    #url,caption= get_ig_img(message.text) 
     #print(url)
+    bot.reply_to(message,'NOICE')
     
 
 while True:
