@@ -10,7 +10,6 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 driver = webdriver.Chrome(executable_path=os.environ.get("GOOGLE_CHROME_BIN"),chrome_options=chrome_options)
 
-#bot token
 
 bot_token ="1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08"
 bot = telebot.TeleBot(token=bot_token)
@@ -70,6 +69,7 @@ def webhook():
     bot.remove_webhook()
     bot.set_webhook(url='https://ig-scrap.herokuapp.com/' + bot_token)
     return "!", 200
+
 
 if __name__ == "__main__":
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
