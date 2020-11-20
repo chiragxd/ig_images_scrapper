@@ -1,6 +1,7 @@
 import telebot,os
 import time
 from flask import Flask, request
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options  
 
@@ -70,7 +71,7 @@ def at_answer(message):
     bot.reply_to(message,'NOICE')
 
 
-@server.route('/' + bot_tokentouc, methods=['POST'])
+@server.route('/' + bot_token, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200   
