@@ -1,20 +1,25 @@
-import telebot
+import telebot,os
 import time
+from flask import Flask, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options  
 
 #web_browser modeule part
-CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
-CHROMEDRIVER_PATH = 'C:\\APPDATA\\Python\\chromedriver.exe'
-WINDOW_SIZE = "1920,1080"
+
+#CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+#CHROMEDRIVER_PATH = 'C:\\APPDATA\\Python\\chromedriver.exe'
+#WINDOW_SIZE = "1920,1080"
 chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.binary_location = CHROME_PATH
-driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
+chrome_options.headless = True
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(executable_path=os.environ.get("GOOGLE_CHROME_BIN"),chrome_options=chrome_options)
 
 #bot token
 bot_token ="1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08"
 bot = telebot.TeleBot(token=bot_token)
+server = Flask(__name__)
 
 
 @bot.message_handler(commands=['start'])
@@ -63,12 +68,20 @@ def at_answer(message):
     #url,caption= get_ig_img(message.text) 
     #print(url)
     bot.reply_to(message,'NOICE')
-    
 
-while True:
-    try:
-        bot.polling()
-    except Exception:
-        time.sleep(15)
+
+@server.route('/' + bot_tokentouc, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200   
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://damp-citadel-21472.herokuapp.com/' + bot_token)
+    return "!", 200
+
+if __name__ == "__main__":
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
 
         
