@@ -58,7 +58,7 @@ def at_answer(message):
     bot.reply_to(message,'NOICE')
     
 
-@server.route('/' + bot_token, methods=['POST'])
+@server.route('/' +'' 1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08', methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200   
@@ -66,7 +66,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://ig-scrap.herokuapp.com/' + bot_token)
+    bot.set_webhook(url='https://ig-scrap.herokuapp.com/' + '1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08')
     return "!", 200
 
 
