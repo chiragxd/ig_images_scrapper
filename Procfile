@@ -1,1 +1,1 @@
-try "web: python bot.py"
+try "worker: python bot.py"
