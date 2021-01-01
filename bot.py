@@ -9,7 +9,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 driver = webdriver.Chrome(executable_path=os.environ.get("GOOGLE_CHROME_BIN"),chrome_options=chrome_options)
 
-bot_token ="1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08"
+bot_token ="Bot Token Here"
 bot = telebot.TeleBot(token=bot_token)
 server = Flask(__name__)
 
@@ -57,7 +57,7 @@ def at_answer(message):
     bot.reply_to(message,'NOICE')
     
 
-@server.route('/' +'1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08', methods=['POST'])
+@server.route('/' +bot_token, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200   
@@ -65,7 +65,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://ig-scrap.herokuapp.com/' + '1471730304:AAGqL9p0aUBstl3q9qEV1GxRa2BbJ4DaD08')
+    bot.set_webhook(url='https://your.herokuapp.com/' + bot_token)
     return "!", 200
 
 if __name__ == "__main__":
